@@ -136,6 +136,7 @@ func textInspector() {
 
 func textInspectorUsingScanner() {
 	scanner := bufio.NewScanner(strings.NewReader(source))
+	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
 		fmt.Printf("%#v\n", scanner.Text())
 	}
