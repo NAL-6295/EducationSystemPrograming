@@ -15,6 +15,7 @@ import (
 func main() {
 
 	textInspector()
+	textInspectorUsingScanner()
 }
 
 func fileio() {
@@ -130,5 +131,12 @@ func textInspector() {
 		if err == io.EOF {
 			break
 		}
+	}
+}
+
+func textInspectorUsingScanner() {
+	scanner := bufio.NewScanner(strings.NewReader(source))
+	for scanner.Scan() {
+		fmt.Printf("%#v\n", scanner.Text())
 	}
 }
