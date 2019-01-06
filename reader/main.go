@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/binary"
+	"encoding/csv"
 	"fmt"
 	"io"
 	"net"
@@ -14,8 +15,7 @@ import (
 
 func main() {
 
-	textInspector()
-	textInspectorUsingScanner()
+	csvRead()
 }
 
 func fileio() {
@@ -139,5 +139,32 @@ func textInspectorUsingScanner() {
 	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
 		fmt.Printf("%#v\n", scanner.Text())
+	}
+}
+
+var source2 = "123 1.234 1.0e4 test"
+
+func textInspectorWithTypeCast() {
+	reader := strings.NewReader(source2)
+	var i int
+	var f, g float64
+	var s string
+	fmt.Fscan(reader, &i, &f, &g, &s)
+	fmt.Printf("i=%#v f=%#v g=%#v s=%#v\n", i, f, g, s)
+}
+
+var csvSource = `1,2,3,4,5,6,7
+11,12,13,14,15,16,17
+21,22,23,24,25,26,27`
+
+func csvRead() {
+	reader := strings.NewReader(csvSource)
+	csvReader := csv.NewReader(reader)
+	for {
+		line, err := csvReader.Read()
+		if err == io.EOF {
+			break
+		}
+		fmt.Println(line[2], line[4:7])
 	}
 }
